@@ -67,16 +67,24 @@ abstract class AbstractNotification implements NotificationInterface
         return (bool)count($this->errors);
     }
 
+    /**
+     * Pozostawione TODO w kodzie, brak faktycznej implementacji
+     */
     public function send()
     {
         // TODO: Implement send() method.
 
     }
+    /**
+     * Pozostawione TODO w kodzie, brak faktycznej implementacji
+     */
     public function markRead()
     {
         // TODO: Implement markRead() method.
     }
-
+    /**
+     * Pozostawione TODO w kodzie, brak faktycznej implementacji
+     */
     public function markUnread()
     {
         // TODO: Implement markUnread() method.

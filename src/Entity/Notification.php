@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Notyfikacja miała być bytem abstrakcyjnym, niepowiązanym z ORM
+ */
+/**
  * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
  * @ORM\HasLifecycleCallbacks()
  */

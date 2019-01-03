@@ -21,6 +21,9 @@ class UsersController extends AbstractController
             'success' => true,
         ];
 
+        /**
+         * Brak UserManager, serwisu wyciągającego użytkowników
+         */
         $repository = $this->getDoctrine()->getRepository(User::class);
         $user = $repository->find($id);
 
@@ -31,6 +34,9 @@ class UsersController extends AbstractController
             return $this->json($arr);
         }
 
+        /**
+         * Brak serializera i walidacji
+         */
         foreach ($user->getNotifications() as $notification) {
             $tmp = [
                 'id' => $notification->getId(),

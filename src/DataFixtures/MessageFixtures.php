@@ -7,6 +7,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Notyfikacje miały być bytem abstrakcyjnym, niewykorzystującym ObjectManagera.
+ * Niepotrzebne wykorzystanie Doctrine
+ */
 class MessageFixtures extends Fixture implements FixtureGroupInterface
 {
 

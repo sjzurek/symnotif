@@ -26,6 +26,11 @@ class NotificationsController extends AbstractController
             'success' => true,
         ];
 
+        /**
+         * Logika pobierania Notyfikacji zawarta bezpośrednio w kontrolerze
+         * - brak DI serwisu/managera do Notyfikacji
+         * - brak serializera, budowanie zwrotki za pomocą foreach
+         */
         $repository = $this->getDoctrine()->getRepository(Notification::class);
         $notifications = $repository->findAll();
         foreach ($notifications as $notification) {
@@ -38,6 +43,9 @@ class NotificationsController extends AbstractController
                 'context' => $notification->getContext()->getId(),
                 'status' => $notification->getStatus(),
             ];
+            /**
+             * 'System' - powinien być CONST lub ENUM
+             */
             if ($notification->getType()->getLabel() === 'System') {
                 $meta = $notification->getMeta();
                 $tmp['priority'] = $meta['priority'];
@@ -46,6 +54,9 @@ class NotificationsController extends AbstractController
             $arr['notifications'][] = $tmp;
         }
 
+        /**
+         * Zwrotka mogłaby być abstrakcyjnym Response'm
+         */
         return $this->json($arr);
     }
 
@@ -71,6 +82,11 @@ class NotificationsController extends AbstractController
         }
 
 
+        /**
+         * Całość logiki filtrowania zawarta w kontrolerze.
+         * - walidacja powinna być przeniesiona do zewnętrznego serwisu wstrzykniętego za pomoca DI do kontrolera
+         * - logika wyciągania encji z requestu powinna być przesunięta do osobnych serwisów, kontroler zajmuje się wszystkim
+         */
         if ($type == 'system') {
             $sender = $entityManager->getRepository(User::class)->findOneBy(['attribute' => 2]);
         } else {
@@ -98,6 +114,9 @@ class NotificationsController extends AbstractController
 
         $notification = $notificationService->create();
 
+        /**
+         * Tworzenie notyfikacji powinno być w Fabryce, nie w kontrolerze
+         */
         $notification
             ->setTitle($post['title'])
             ->setDescription($post['description'])
@@ -134,6 +153,9 @@ class NotificationsController extends AbstractController
         ];
 
 
+        /**
+         * Brak wstrzykniętego serwisu do Notyfikacji
+         */
         $repository = $this->getDoctrine()->getRepository(Notification::class);
         $notification = $repository->find($id);
 
@@ -144,6 +166,9 @@ class NotificationsController extends AbstractController
             return $this->json($arr);
         }
 
+        /**
+         * Brak serializera
+         */
         $tmp = [
             'id' => $notification->getId(),
             'title' => $notification->getTitle(),
@@ -154,6 +179,9 @@ class NotificationsController extends AbstractController
             'status' => $notification->getStatus(),
         ];
 
+        /**
+         * Pozostawione TODO w kodzie
+         */
         // todo: move to service
         if ($notification->getType()->getSlug() === 'system') {
             $meta = $notification->getMeta();
@@ -166,6 +194,9 @@ class NotificationsController extends AbstractController
     }
 
 
+    /**
+     * Dwa poniższe route'y mogłyby być zebrane w jeden, nadmiarowy kod
+     */
     /**
      * @Route(
      *     "/notifications/{id}/mark/read",

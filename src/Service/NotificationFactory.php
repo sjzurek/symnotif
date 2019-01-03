@@ -8,6 +8,9 @@ class NotificationFactory
 {
 
     /**
+     * $type powinien być ENUM aby nie spowodować błędów
+     */
+    /**
      * @param $type
      * @return mixed
      */
